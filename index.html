@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Tug o' War</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    # Teams:
+    <input type="number" id="player field" min="2" max="24" value="2" />
+
+    <select id="size dropdown">
+      <option value="Adjacent">Adjacent</option>
+      <option value="Close">Close</option>
+      <option value="Far">Far</option>
+      <option value="Furthest">Furthest</option>
+    </select>
+
+    <select id="center dropdown">
+      <option value="w">Must Have a Center</option>
+      <option value="w/o">Must Not Have a Center</option>
+      <option value="idc">No Filter</option>
+    </select>
+
+    <button type="button" id="search button">Search</button>
+    <button type="button" id="center reroll button">Reroll Center</button>
+
+    <div id="results">Results:</div>
+  </body>
+  <script type="module" src="/index.ts"></script>
+</html>
