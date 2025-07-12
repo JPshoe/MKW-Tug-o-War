@@ -5,26 +5,47 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    # Teams:
-    <input type="number" id="player field" min="2" max="24" value="2" />
+    <div class="main_input">
+      <div class="search">
+        <b>Number of Teams:</b>
+        <input type="number" id="player field" min="2" max="24" value="2" />
+      </div>
 
-    <select id="size dropdown">
-      <option value="Adjacent">Adjacent</option>
-      <option value="Close">Close</option>
-      <option value="Far">Far</option>
-      <option value="Furthest">Furthest</option>
-    </select>
+      <div class="search">
+        <b>Size:</b>
+        <select id="size dropdown">
+          <option value="Adjacent">Adjacent</option>
+          <option value="Close">Close</option>
+          <option value="Far">Far</option>
+          <option value="Furthest">Furthest</option>
+        </select>
+      </div>
 
-    <select id="center dropdown">
-      <option value="w">Must Have a Center</option>
-      <option value="w/o">Must Not Have a Center</option>
-      <option value="idc">No Filter</option>
-    </select>
+      <div class="search">
+        <b>Filter:</b>
+        <select id="center dropdown">
+          <option value="w">Must Have a Center</option>
+          <option value="w/o">Must Not Have a Center</option>
+          <option value="idc">No Filter</option>
+        </select>
+      </div>
+    </div>
 
-    <button type="button" id="search button">Search</button>
-    <button type="button" id="center reroll button">Reroll Center</button>
+    <div class="main_buttons">
+      <button type="button" id="search button" class="search">Search</button>
+      <button type="button" id="center reroll button" class="search">
+        Reroll Center
+      </button>
+    </div>
 
-    <div id="results">Results:</div>
+    <div id="result_group">
+      <div id="results"></div>
+      <div id="gen_type_icon"></div>
+      <div id="gen_description"></div>
+    </div>
+
+    <div id="result_images"></div>
+    <div id="center_info"></div>
   </body>
   <script type="module" src="./index.ts"></script>
 </html>

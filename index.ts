@@ -2,6 +2,7 @@ import { equ_lump } from "./equ_lump";
 import { knuthShuffle } from "./math_utils";
 import { ring_lump } from "./ring_lump";
 import { sep_lump } from "./sep_lump";
+const { BASE_URL } = import.meta.env;
 
 document.addEventListener("DOMContentLoaded", () => {
   init();
@@ -11,11 +12,21 @@ var results: HTMLElement;
 var size_dropdown: HTMLInputElement;
 var player_field: HTMLInputElement;
 var center_dropdown: HTMLInputElement;
+var result_images: HTMLElement;
+var center_info: HTMLElement;
+var gen_type_icon: HTMLElement;
+var gen_description: HTMLElement;
 
 function init() {
   results = document.getElementById("results") as HTMLElement;
+  result_images = document.getElementById("result_images") as HTMLElement;
+  center_info = document.getElementById("center_info") as HTMLElement;
   size_dropdown = document.getElementById("size dropdown") as HTMLInputElement;
   player_field = document.getElementById("player field") as HTMLInputElement;
+  gen_type_icon = document.getElementById("gen_type_icon") as HTMLInputElement;
+  gen_description = document.getElementById(
+    "gen_description"
+  ) as HTMLInputElement;
   center_dropdown = document.getElementById(
     "center dropdown"
   ) as HTMLInputElement;
@@ -85,17 +96,17 @@ function search_clicked() {
     options = [];
     if (su != undefined) {
       s = su.map((x) => {
-        return [x[0], x[1], gen_type.Separated];
+        return [knuthShuffle(x[0]), x[1], gen_type.Separated];
       });
     }
     if (eu != undefined) {
       e = eu.map((x) => {
-        return [x[0], x[1], gen_type.Equidistant];
+        return [knuthShuffle(x[0]), x[1], gen_type.Equidistant];
       });
     }
     if (ru != undefined) {
       r = ru.map((x) => {
-        return [x[0], x[1], gen_type.Ring];
+        return [knuthShuffle(x[0]), x[1], gen_type.Ring];
       });
     }
 
@@ -117,7 +128,6 @@ function search_clicked() {
     }
 
     option_i = 0;
-    center_i = 0;
   } else {
     if (options[option_i][2] == gen_type.Random) {
       options = [gen_random_map(player_count)];
@@ -128,6 +138,7 @@ function search_clicked() {
       }
     }
   }
+  center_i = 0;
 
   picked_option = options[option_i];
   possible_centers = picked_option[1];
@@ -157,6 +168,10 @@ function center_filter(options) {
 }
 
 function reroll_center_clicked() {
+  if (possible_centers.length < 1) {
+    return;
+  }
+
   center_i += 1;
   if (center_i >= possible_centers.length) {
     center_i = 0;
@@ -166,10 +181,58 @@ function reroll_center_clicked() {
 }
 
 function display_roll() {
+  results.innerHTML = "";
+  result_images.innerHTML = "";
+  center_info.innerHTML = "";
+  gen_type_icon.innerHTML = "";
+  gen_description.innerHTML = "";
+
   if (picked_option[2] == gen_type.None) {
     results.innerHTML = gen_error_message();
   } else {
-    results.innerHTML = `Courses:<br>${picked_option[0]}<br>Center:<br>${possible_centers[center_i]}<br>Generation Type:${picked_option[2]}`;
+    // results.innerHTML = `Courses:<br>${picked_option[0]}<br>Center:<br>${possible_centers[center_i]}<br>Generation Type:${picked_option[2]}`;
+    var gen_text = "";
+    var icon = "";
+    switch (picked_option[2]) {
+      case gen_type.Equidistant:
+        gen_text = "(Courses are the same distance from each other)";
+        icon = "🟰";
+        break;
+      case gen_type.Ring:
+        gen_text = "(Courses form a ring)";
+        icon = "⭕";
+        break;
+      case gen_type.Separated:
+        gen_text = "(Courses are separated)";
+        icon = "↔️";
+        break;
+      case gen_type.Random:
+        gen_text = "(Courses were randomized)";
+        icon = "🎲";
+        break;
+    }
+
+    results.innerHTML = `Results:`;
+    gen_type_icon.innerHTML = icon;
+    gen_description.innerHTML = gen_text;
+    for (let course of picked_option[0]) {
+      var img = document.createElement("img");
+      img.src = `${BASE_URL}stickers/${course.replace("?", "_")}.png`;
+      result_images.appendChild(img);
+    }
+
+    if (picked_option[1].length != 0) {
+      var div = document.createElement("div");
+      div.id = "center_text";
+      div.textContent = "Center";
+      center_info.appendChild(div);
+      var img = document.createElement("img");
+      img.src = `${BASE_URL}stickers/${picked_option[1][center_i].replace(
+        "?",
+        "_"
+      )}.png`;
+      center_info.appendChild(img);
+    }
   }
 }
 

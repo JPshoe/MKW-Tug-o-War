@@ -1,0 +1,80 @@
+.search,
+.search > input,
+.search > select,
+#results,
+#center_text,
+#gen_type_icon,
+#gen_description {
+  font-size: 3rem;
+  font-family: Helvetica, sans-serif;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  text-align: right;
+}
+
+#results {
+  text-align: left;
+  padding-left: 1.5rem;
+  display: block;
+}
+
+.main_buttons {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 1rem;
+}
+
+.main_input {
+  margin: 1rem;
+}
+
+.main_input > div {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#result_images > img {
+  max-width: 20rem;
+  max-height: 20rem;
+}
+
+#result_images {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+#result_group {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+#gen_description {
+  opacity: 0;
+  text-align: left;
+}
+
+#gen_description {
+  font-size: 1.5rem;
+}
+
+#gen_type_icon:hover + #gen_description {
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
+}
+
+#center_info {
+  text-align: center;
+}
+
+#center_text {
+  text-align: center;
+  padding: 0;
+}
+
+body {
+  background-image: url(images/BG.gif);
+}
